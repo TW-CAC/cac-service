@@ -7,6 +7,9 @@ import com.cac.service.domain.user.toUserDetails
 import com.cac.service.exception.UsernameFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.status
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,8 +21,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/rest/auth")
 class UserSignInController(
-    @Autowired val jwtTokenService: JwtTokenService,
-    @Autowired val userService: UserService
+    @Autowired private val jwtTokenService: JwtTokenService,
+    @Autowired private val userService: UserService
 ) {
     companion object {
         private val LOGGER = LoggerFactory.getLogger(UserSignInController::class.java)
@@ -42,20 +45,22 @@ class UserSignInController(
     }
 
     @PostMapping("/user/login")
-    fun login(@RequestBody request: UserLoginRequest): String {
+    fun login(@RequestBody request: UserLoginRequest): ResponseEntity<UserLoginResponse> {
         return userService.findByUserName(request.userName)?.let { user ->
             if (user.password != request.password) {
                 throw AccessDeniedException("User password error.")
             }
 
-            jwtTokenService.generateToken(user.toUserDetails())
+            status(HttpStatus.OK).body(
+                UserLoginResponse(jwtTokenService.generateToken(user.toUserDetails()))
+            )
         } ?: throw AccessDeniedException("No such user")
     }
 
     @PostMapping("/user/register")
     fun registerUser(
         @RequestBody @Valid request: UserRegisterRequest
-    ): String {
+    ): ResponseEntity<UserLoginResponse> {
         val findUser = userService.findByUserName(request.userName)
         if (findUser != null) {
             LOGGER.info("User name {} already exists.", request.userName)
@@ -64,7 +69,9 @@ class UserSignInController(
 
         userService.save(request.toUser());
 
-        return jwtTokenService.generateToken(request.toUser().toUserDetails())
+        return status(HttpStatus.OK).body(
+            UserLoginResponse(jwtTokenService.generateToken(request.toUser().toUserDetails()))
+        )
     }
 }
 
@@ -78,6 +85,10 @@ data class UserRegisterRequest(
     val password: String,
     val email: String?,
     val phoneNumber: String?
+)
+
+data class UserLoginResponse(
+    val token: String
 )
 
 private fun UserRegisterRequest.toUser() =
