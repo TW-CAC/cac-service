@@ -1,0 +1,50 @@
+@startuml
+!include c4_includes/C4_Container.puml
+
+
+title Container diagram for CAC System
+
+Person(trainee, "Trainee", "学习课程的学员")
+Person(trainer, "Trainer", "教授课程的老师")
+
+Person_Ext(admin, "Admin", "可以创建课程，创建用户的管理员")
+
+Container(app, "Mobile App", "Flutter", " 提供学员和老师参与课程使用的客户端")
+
+Container(course_bff, "Course BFF", "Kotlin, Spring Boot Reactive", "提供客户端使用的查询课程的API")
+
+Container_Boundary(course_service, "Course Service"){
+    Container(course_api, "Course API", "Kotlin, Spring Boot Reactive", "提供创建和查询课程的API")
+    ContainerDb(course_db, "Course Database", "MongoDB", "保存课程数据")
+}
+
+Container_Boundary(class_service, "Class Service"){
+    Container(class_api, "Class API", "Kotlin, Spring Boot Reactive", "提供创建和查询班级，修改、提交、评论作业的API")
+    ContainerDb(class_db, "Class Database", "MongoDB", "保存班级数据")
+}
+
+Container_Boundary(user_service, "User Service"){
+    Container(user_api, "User API", "Kotlin, Spring Boot Reactive", "提供创建和查询用户的API")
+    ContainerDb(user_db, "User Database", "MongoDB", "保存用户数据")
+}
+
+
+Rel(trainee, app, "使用")
+Rel(trainer, app, "使用")
+
+Rel(admin, course_api, "使用", "JOSN/HTTPS")
+Rel(admin, user_api, "使用", "JOSN/HTTPS")
+
+Rel(app, course_bff, "使用", "JOSN/HTTPS")
+Rel(app, class_api, "使用", "JOSN/HTTPS")
+
+Rel(course_bff, course_api, "使用", "JOSN/HTTPS")
+Rel_D(course_api, course_db, "读写", "Spring DATA Reactive")
+
+Rel(course_bff, class_api, "使用", "JOSN/HTTPS")
+Rel_D(class_api, class_db, "读写", "Spring DATA Reactive")
+
+Rel(course_bff, user_api, "使用", "JOSN/HTTPS")
+Rel_D(user_api, user_db, "读写", "Spring DATA Reactive")
+
+@enduml

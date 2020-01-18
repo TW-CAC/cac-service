@@ -1,0 +1,65 @@
+@startuml
+!include c4_includes/C4_Component.puml
+
+' LAYOUT_WITH_LEGEND
+
+title Component diagram for CAC System
+
+Container(app, "Mobile App", "Flutter", " 提供学员和老师参与课程使用的客户端")
+
+Container_Boundary(course_api, "Course API"){
+   Component(course, "Course Controller", "REST Controller","提供创建、查询课程API")
+   Component(course_repo, "Course Entity","Spring Bean", "课程实体")
+   Component(course_subsciption, "Course Subscription Entity","Spring Bean", "待开班的实体")
+   ContainerDb(course_db, "Course Database", "MongoDB", "保存课程数据")
+
+   Rel_D(course, course_repo, "使用")
+   Rel_D(course, course_subsciption, "使用")
+   Rel_D(course_repo, course_db, "读写", "Spring DATA Reactive")
+   Rel_D(course_subsciption, course_db, "读写", "Spring DATA Reactive")
+}
+
+Container_Boundary(user_api, "User API"){
+   Component(user, "User Controller", "REST Controller","提供创建、查询用户API")
+   Component(user_repo, "User Entity","Spring Bean", "用户实体")
+   ContainerDb(user_db, "User Database", "MongoDB", "保存用户数据")
+
+   Rel_D(user, user_repo, "使用")
+   Rel_D(user_repo, user_db, "读写", "Spring DATA Reactive")
+}
+
+Container_Boundary(class_api, "Class API"){
+   Component(class, "Class Controller", "REST Controller","提供创建、查询班级API")
+   Component(class_repo, "Class Entity","Spring Bean", "班级实体")
+   ContainerDb(class_db, "Class Database", "MongoDB", "保存班级数据")
+
+   Rel_D(class, class_repo, "使用")
+   Rel_D(class_repo, class_db, "读写", "Spring DATA Reactive")
+}
+
+Container_Boundary(course_bff, "Course BFF"){
+   Component(course_for_app, "Course BFF", "REST Controller","提供课程列表给客户端")
+   Component(course_aggregate, "Course Aggregate", "Spring BEAN","提供课程列表给客户端")
+
+   Component(user_client, "User Query Client", "HTTP Client","查询学员和老师的信息")
+   Component(class_client, "Class Query Client", "HTTP Client","查询开班信息")
+   Component(course_client, "Course Query Client", "HTTP Client","查询课程信息")
+
+   Rel(user_client, user_api, "查询", "JSON/HTTPS")
+   Rel(class_client, class_api, "创建、查询", "JSON/HTTPS")
+   Rel(course_client, course, "查询", "JSON/HTTPS")
+
+   Rel(course_for_app, course_aggregate, "使用")
+   Rel(course_aggregate, user_client, "使用")
+   Rel(course_aggregate, class_client, "使用")
+   Rel(course_aggregate, course_client, "使用")
+
+   Lay_R(course_aggregate, user_client)
+   Lay_L(course_aggregate, class_client)
+   Lay_D(course_aggregate, user_client)
+   Lay_D(course_aggregate, class_client)
+}
+
+Rel(app, course_for_app, "使用","JSON/HTTPS")
+
+@enduml

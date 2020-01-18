@@ -1,0 +1,65 @@
+POST http://localhost:8081/api/rest/auth/user/register
+Content-Type: application/json
+
+{
+  "userName": "qinyu",
+  "password": "123456"
+}
+
+###
+
+
+POST http://localhost:8081/api/rest/auth/user/login
+Content-Type: application/json
+
+{
+  "userName": "qinyu",
+  "password": "123456"
+}
+
+###
+
+POST http://localhost:8081/api/rest/auth/user/auto-login
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+
+###
+
+GET http://localhost:8081/api/userinfo
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+
+###
+
+
+POST http://localhost:8081/api/course
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+Content-Type: application/json
+
+{
+  "title": "CAC管理教练特种兵计划",
+  "description": "CAC管理教练特种兵计划日常作业",
+  "questions": [
+    {"title":"《敏捷教练培养的“守、破、离”》读后感​"},
+    {"title":"《培养“教练团队”为什么是敏捷转型中的必经之路》读后感"},
+    {"title":"文化轰炸"},
+    {"title":"站会总有人迟到怎么破？"},
+    {"title":"文化解读之“求责于己”实例化"},
+    {"title":"结合实践案例分享需求梳理过程中遇到的困难和解决方案"},
+    {"title":"《Scrum看板相得益彰》读书笔记"},
+    {"title":"《Scrum精髓》读书笔记"},
+    {"title":"深度思考：如何提高质量"},
+    {"title":"AC验收条件作业分享"},
+    {"title":"《如何构建敏捷项目管理团队》读书笔记"},
+    {"title":"关于“度量”"},
+    {"title":"STAR模型"}
+  ],
+  "creator":{
+    "id": "f838106d-3f9a-4107-a605-7e6d90b18e98"
+  }
+}
+
+###
+
+GET http://localhost:8081/api/course
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+
+###

@@ -16,6 +16,9 @@ class UserService(
     fun findByUserName(userName: String) =
         userRepository.findByUserName(userName)?.toUser()
 
+    fun findAllUsers() =
+            userRepository.findAll().map { it.toUser() }
+
     private fun User.toUserView() =
         UserView(this.id, this.userName, this.password, this.email, this.phoneNumber)
 

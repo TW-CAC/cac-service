@@ -1,0 +1,24 @@
+@startuml
+!include c4_includes/C4_Context.puml
+
+title Context diagram for CAC System
+
+Person(trainee, "Trainee", "学习课程的学员")
+Person(trainer, "Trainer", "教授课程的老师")
+
+Person_Ext(admin, "Admin", "可以创建课程，创建用户的管理员")
+
+Enterprise_Boundary(c1, "CAC"){
+    System(training_system, "培训系统", "老师可以开设课程，学员可以参与感兴趣的课程完成学习，双方可以互动")
+}
+
+Rel(trainee, training_system, "使用")
+
+Rel(trainer, training_system, "使用")
+
+Rel(admin, training_system, "使用")
+
+
+Lay_D(trainee, training_system)
+
+@enduml

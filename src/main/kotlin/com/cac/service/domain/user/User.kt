@@ -13,3 +13,5 @@ class User(
 
 fun User.toUserDetails() =
     org.springframework.security.core.userdetails.User(this.userName, this.password, emptyList())
+
+data class UserInfo( val id: UUID,  var userName: String? = null)
