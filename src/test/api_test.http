@@ -1,14 +1,15 @@
+# 注册
 POST http://localhost:8081/api/rest/auth/user/register
 Content-Type: application/json
 
 {
-  "userName": "qinyu",
+  "userName": " qinyu",
   "password": "123456"
 }
 
 ###
 
-
+# 登录
 POST http://localhost:8081/api/rest/auth/user/login
 Content-Type: application/json
 
@@ -19,17 +20,19 @@ Content-Type: application/json
 
 ###
 
+# 自动登录
 POST http://localhost:8081/api/rest/auth/user/auto-login
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
 
 ###
 
+# 获取用户信息
 GET http://localhost:8081/api/userinfo
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
 
 ###
 
-
+# 创建课程
 POST http://localhost:8081/api/course
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
 Content-Type: application/json
@@ -59,7 +62,34 @@ Content-Type: application/json
 
 ###
 
+# 获取课程列表
 GET http://localhost:8081/api/course
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+
+###
+
+# 删除课程
+DELETE http://localhost:8081/api/course?courseId=24246584-da8c-4331-9f1a-29c5f549a932
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+###
+
+# 订阅课程
+POST http://localhost:8081/api/subscription?courseId=f9f7707f-fb06-46dd-ba78-ebcb1e990581
+userId: 58a75ee9-8ebf-4ec3-8f4e-3bf60846272d
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+
+###
+
+# Creator 不能订阅自己的课程
+POST http://localhost:8081/api/subscription?courseId=f9f7707f-fb06-46dd-ba78-ebcb1e990581
+userId: f838106d-3f9a-4107-a605-7e6d90b18e98
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+
+###
+
+# CourseID 不存在
+POST http://localhost:8081/api/subscription?courseId=f9f7707f-fb06-46dd-ba78-ebcb1e990582
+userId: 58a75ee9-8ebf-4ec3-8f4e-3bf60846272d
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
 
 ###

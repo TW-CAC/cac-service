@@ -15,7 +15,7 @@ data class CourseView(
         val description: String,
         val creator: UUID,
         val questions: List<Question>,
-        var subscribers: List<UUID>?
+        val subscribers: List<UUID> = listOf()
 )
 
-fun CourseView.toCourse() = Course(id, title, description, UserInfo(id), questions, subscribers?.map { UserInfo(it) })
+fun CourseView.toCourse() = Course(id, title, description, UserInfo(creator), questions, subscribers.map { UserInfo(it) })

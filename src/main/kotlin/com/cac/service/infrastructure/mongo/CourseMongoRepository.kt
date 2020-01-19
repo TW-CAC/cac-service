@@ -16,9 +16,19 @@ class CourseMongoRepository(private val courseMongoRepositoryImpl: CourseMongoRe
     override fun courseOfId(courseId: String) = courseMongoRepositoryImpl.findById(UUID.fromString(courseId)).orElse(null)?.toCourse()
     override fun allCourses(): List<Course> = courseMongoRepositoryImpl.findAll().map { it.toCourse() }
     override fun create(course: Course): Course {
-        val courseView = CourseView(course.id, course.title, course.description, course.creator.id, course.questions, course.subscribers?.map { it.id })
+        val courseView = CourseView(course.id, course.title, course.description, course.creator.id, course.questions, course.subscribers.map { it.id })
         return courseMongoRepositoryImpl.save(courseView).toCourse()
     }
+
+    override fun update(course: Course): Course {
+        val courseView = CourseView(course.id, course.title, course.description, course.creator.id, course.questions, course.subscribers.map { it.id })
+        return courseMongoRepositoryImpl.save(courseView).toCourse()
+    }
+
+    override fun delete(courseId: String) {
+        courseMongoRepositoryImpl.deleteById(UUID.fromString(courseId))
+    }
+
 }
 
 
