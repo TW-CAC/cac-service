@@ -1,0 +1,27 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    restart: always
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --logpath=/dev/null # --quiet
+  cac-service:
+    build: .
+    image: rainbow/cac-service:v1
+    container_name: "cac-service"
+    environment:
+      - "DB_HOST=db"
+    ports:
+      - 8081:8081
+      - 8000:8000
+    depends_on:
+      - mongodb
+    links:
+      - mongodb:db

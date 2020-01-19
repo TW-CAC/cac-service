@@ -10,6 +10,7 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.xml
     url: ${spring.datasource.url}
     enabled: true
+
 auth:
   jwt:
     secret: cac-service
@@ -17,5 +18,10 @@ auth:
   token:
     valid:
       time: 7 * 24 * 60 * 60 * 1000
+
+mongo:
+  connection:
+    string: mongodb://localhost
+  dbname: cac-service
 server:
   port: 8081

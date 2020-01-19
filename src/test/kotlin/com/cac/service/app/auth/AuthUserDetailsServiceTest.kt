@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.access.AccessDeniedException
 
 @ExtendWith(MockKExtension::class)
 class AuthUserDetailsServiceTest {
@@ -38,11 +38,11 @@ class AuthUserDetailsServiceTest {
     }
 
     @Test
-    fun `should throw UsernameNotFoundException when call loadUserByUsername given can not find user`() {
+    fun `should throw AccessDeniedException when call loadUserByUsername given can not find user`() {
         val userName = "tester"
         every { userService.findByUserName(any()) } returns null
 
-        assertThrows<UsernameNotFoundException> {
+        assertThrows<AccessDeniedException> {
             authUserDetailsService.loadUserByUsername(userName)
         }
     }

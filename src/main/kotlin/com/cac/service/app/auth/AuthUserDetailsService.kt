@@ -2,10 +2,10 @@ package com.cac.service.app.auth
 
 import com.cac.service.app.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,7 +16,7 @@ class AuthUserDetailsService(
         val user = userService.findByUserName(userName)
         return user?.let {
             User(user.userName, user.password, emptyList())
-        } ?: throw UsernameNotFoundException("User not found with username: $userName")
+        } ?: throw AccessDeniedException("User not found with username: $userName")
 
     }
 }
