@@ -3,7 +3,7 @@ POST http://localhost:8081/api/rest/auth/user/register
 Content-Type: application/json
 
 {
-  "userName": " qinyu",
+  "userName": "qinyu",
   "password": "123456"
 }
 

@@ -5,11 +5,8 @@ import com.cac.service.app.auth.JwtTokenService
 import com.cac.service.app.user.UserService
 import com.cac.service.domain.user.User
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.mockk.Runs
-import io.mockk.every
+import io.mockk.*
 import io.mockk.junit5.MockKExtension
-import io.mockk.just
-import io.mockk.mockk
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -23,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.util.*
 
 @ExtendWith(MockKExtension::class)
 @WebMvcTest(controllers = [UserSignInController::class])
@@ -125,14 +123,17 @@ class UserSignInControllerTest {
 
         @Test
         fun `should return token when user login given user request is valid`() {
+            val uuid = UUID.randomUUID()
             every {
                 userService.findByUserName(any())
-            } returns User("test", "password", null, null)
+            } returns User("test", "password", null, null, id = uuid)
             every { jwtTokenService.generateToken(any()) } returns "fake-token"
 
             postCommand(LOGIN_URL, userLoginRequest())
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("\$.token", Matchers.`is`("fake-token")))
+                    .andExpect(jsonPath("$.id", Matchers.`is`("$uuid")))
+                    .andExpect(jsonPath("$.userName", Matchers.`is`("test")))
         }
 
         fun userLoginRequest(): String = asJson(UserLoginRequest(
@@ -153,14 +154,22 @@ class UserSignInControllerTest {
 
         @Test
         fun `should return token when user register given user request is valid`() {
+            val uuid = UUID.randomUUID()
             every { userService.findByUserName(any()) } returns null
-            every { userService.save(any()) } just Runs
+            every { userService.save(any()) } returns User(userName = "test",
+                    password = "password",
+                    email = "test@qq.com",
+                    phoneNumber = "123456789",
+                    id= uuid
+            )
             every { jwtTokenService.generateToken(any()) } returns "fake-token"
 
 
             postCommand(REGISTER_URL, userRegisterRequest())
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$.token", Matchers.`is`("fake-token")))
+                .andExpect(jsonPath("$.id", Matchers.`is`("$uuid")))
+                .andExpect(jsonPath("$.userName", Matchers.`is`("test")))
         }
 
         fun userRegisterRequest() = asJson(

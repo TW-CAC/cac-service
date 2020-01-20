@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 import javax.validation.Valid
 
 @RestController
@@ -52,7 +53,7 @@ class UserSignInController(
             }
 
             status(HttpStatus.OK).body(
-                UserLoginResponse(jwtTokenService.generateToken(user.toUserDetails()))
+                UserLoginResponse(jwtTokenService.generateToken(user.toUserDetails()), user.id, user.userName)
             )
         } ?: throw AccessDeniedException("No such user")
     }
@@ -67,10 +68,10 @@ class UserSignInController(
             throw UsernameFoundException()
         }
 
-        userService.save(request.toUser());
+        val user = userService.save(request.toUser());
 
         return status(HttpStatus.OK).body(
-            UserLoginResponse(jwtTokenService.generateToken(request.toUser().toUserDetails()))
+            UserLoginResponse(jwtTokenService.generateToken(user.toUserDetails()), user.id, user.userName)
         )
     }
 }
@@ -88,7 +89,9 @@ data class UserRegisterRequest(
 )
 
 data class UserLoginResponse(
-    val token: String
+        val token: String,
+        val id: UUID,
+        val userName: String
 )
 
 private fun UserRegisterRequest.toUser() =
