@@ -6,7 +6,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.AccessDeniedException
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -46,6 +45,9 @@ class CACExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleException(exception: Exception): ResponseEntity<ErrorResponse> = when (exception) {
         is AccessDeniedException -> handleForbidden(exception)
         is UsernameFoundException -> handleRepeatUsername(exception)
+        is ClassNotFoundException -> handleClassNotFound(exception)
+        is ExerciseNotFoundException -> handleExerciseNotFound(exception)
+        is AnswerNotFoundException -> handleAnswerNotFound(exception)
         else -> ResponseEntity(HttpStatus.BAD_REQUEST)
     }
 
@@ -61,6 +63,27 @@ class CACExceptionHandler : ResponseEntityExceptionHandler() {
             .body(ErrorResponse(listOf(
                 ErrorDetails("User name already exists.", null)
             )))
+
+    private fun handleClassNotFound(exception: ClassNotFoundException) =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(listOf(
+                ErrorDetails(exception.message ?: "Class does not found.", null)
+            )))
+
+    private fun handleExerciseNotFound(exception: ExerciseNotFoundException) =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(listOf(
+                ErrorDetails(exception.message ?: "Exercise does not found.", null)
+            )))
+
+    private fun handleAnswerNotFound(exception: AnswerNotFoundException) =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(listOf(
+                ErrorDetails(exception.message ?: "Answer does not found.", null)
+            )))
 }
 
 class UsernameFoundException(): Exception()
+class ClassNotFoundException(message: String): Exception(message)
+class ExerciseNotFoundException(message: String): Exception(message)
+class AnswerNotFoundException(message: String): Exception(message)
