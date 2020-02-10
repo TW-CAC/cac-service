@@ -5,7 +5,7 @@ DOCKER_COMPOSE:=docker-compose -f docker-compose.yml
 .PHONY: build run start stop update update-proxy multitail
 
 build:
-	$(DOCKER_COMPOSE) build --pull
+	$(DOCKER_COMPOSE) build
 
 run:
 	$(DOCKER_COMPOSE) up

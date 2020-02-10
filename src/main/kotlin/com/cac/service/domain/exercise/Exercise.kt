@@ -10,7 +10,8 @@ data class Exercise (
     val question: Question,
     val answers: MutableList<Answer> = mutableListOf(),
     val comments: MutableList<Comment> = mutableListOf(),
-    val isPublished: Boolean = false
+    val isPublished: Boolean = false,
+    val creatorId: UUID? = null
 )
 
 data class Answer (

@@ -17,7 +17,7 @@ auth:
     subject: dfd27a9e-92aa-4db7-b93e-6d5f005a6a39
   token:
     valid:
-      time: 7 * 24 * 60 * 60 * 1000
+      time: 365 * 24 * 60 * 60 * 1000
 
 mongo:
   connection:

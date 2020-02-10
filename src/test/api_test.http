@@ -22,19 +22,17 @@ Content-Type: application/json
 
 # 自动登录
 POST http://localhost:8081/api/rest/auth/user/auto-login
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
-
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
 ###
 
 # 获取用户信息
 GET http://localhost:8081/api/userinfo
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
-
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
 ###
 
 # 创建课程
 POST http://localhost:8081/api/course
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
 Content-Type: application/json
 
 {
@@ -64,32 +62,82 @@ Content-Type: application/json
 
 # 获取课程列表
 GET http://localhost:8081/api/course
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
-
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
 ###
 
 # 删除课程
 DELETE http://localhost:8081/api/course?courseId=24246584-da8c-4331-9f1a-29c5f549a932
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
 ###
 
 # 订阅课程
 POST http://localhost:8081/api/subscription?courseId=f9f7707f-fb06-46dd-ba78-ebcb1e990581
-userId: 58a75ee9-8ebf-4ec3-8f4e-3bf60846272d
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
-
+userId: 06c7c33e-0394-46cf-9211-078c6e9c231c
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
 ###
 
 # Creator 不能订阅自己的课程
 POST http://localhost:8081/api/subscription?courseId=f9f7707f-fb06-46dd-ba78-ebcb1e990581
-userId: f838106d-3f9a-4107-a605-7e6d90b18e98
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
-
+userId: 06c7c33e-0394-46cf-9211-078c6e9c231c
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
 ###
 
 # CourseID 不存在
 POST http://localhost:8081/api/subscription?courseId=f9f7707f-fb06-46dd-ba78-ebcb1e990582
-userId: 58a75ee9-8ebf-4ec3-8f4e-3bf60846272d
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU3OTkyNjA0NSwiaWF0IjoxNTc5MzIxMjQ1fQ.mMGaosi1q4Z-yTM9CJiO6fo5LMENyeXnq7s5xr6vDx4bNkr9ITUuvMrn7cpaUZzVPFDkXcxPr6wJQ-UcluneXw
+userId: 06c7c33e-0394-46cf-9211-078c6e9c231c
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
+
+### 作业
+
+# 创建作业
+POST http://localhost:8081/api/exercise
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
+Content-Type: application/json
+
+{
+    "classId": "06c7c33e-0394-46cf-9211-078c6e9c231c",
+    "isPublished": false,
+    "title": "test",
+    "description": "use to test",
+    "creatorId": "06c7c33e-0394-46cf-9211-078c6e9c231c"
+}
+
+###
+# 将作业状态改为发布状态
+PUT http://localhost:8081/api/exercises/ab66c17d-7cf1-4a4c-9e8f-78eea251164e
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
+
+###
+# 提交作业答案
+POST http://localhost:8081/api/exercises/ab66c17d-7cf1-4a4c-9e8f-78eea251164e/answer
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
+Content-Type: application/json
+
+{
+  "userId": "06c7c33e-0394-46cf-9211-078c6e9c231c",
+  "answer": "my answer"
+}
+
+###
+# 评论作业
+POST http://localhost:8081/api/exercises/ab66c17d-7cf1-4a4c-9e8f-78eea251164e/comment
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
+Content-Type: application/json
+
+{
+  "userId": "06c7c33e-0394-46cf-9211-078c6e9c231c",
+  "comment": "comment exercise"
+}
+
+###
+# 评论答案
+POST http://localhost:8081/api/exercises/ab66c17d-7cf1-4a4c-9e8f-78eea251164e/answers/de3388bb-57e2-4da1-adba-e6c2b01a37e7/comment
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxaW55dSIsImV4cCI6MTU4MjgwMDAwOSwiaWF0IjoxNTgxMzI4NzgwfQ.JfXYpf0jGt4fq4QzBttS-2fhmthtUBv0McHzv0V3ZZ8b-7oedkOIXFPB7Rc6TyFHHNZ9CzVSZ11_L8_gf160jg
+Content-Type: application/json
+
+{
+  "userId": "06c7c33e-0394-46cf-9211-078c6e9c231c",
+  "comment": "comment answer"
+}
 
 ###

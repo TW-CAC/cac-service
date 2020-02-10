@@ -5,6 +5,9 @@ import com.cac.service.domain.course.Question
 import com.cac.service.domain.exercise.Answer
 import com.cac.service.domain.exercise.Comment
 import com.cac.service.domain.exercise.Exercise
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.status
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -19,46 +22,55 @@ import java.util.UUID
 class ExerciseCommandController(
     private val exerciseService: ExerciseService
 ) {
-    @PostMapping("/exercises/{exerciseId}/answer}")
+    @PostMapping("/exercises/{exerciseId}/answer")
     fun submitExerciseAnswer(@PathVariable exerciseId: UUID,
-                             @RequestBody createExerciseAnswer: CreateExerciseAnswerRequest) {
-        exerciseService.saveExerciseAnswer(exerciseId, createExerciseAnswer.toAnswer())
-    }
+                             @RequestBody createExerciseAnswer: CreateExerciseAnswerRequest) =
+        status(HttpStatus.OK).body(
+            CreateExerciseAnswerResponse(exerciseService.saveExerciseAnswer(exerciseId, createExerciseAnswer.toAnswer()))
+        )
+
 
     @PostMapping("/exercises/{exerciseId}/comment")
     fun submitExerciseComment(@PathVariable exerciseId: UUID,
-                              @RequestBody createCommentRequest: CreateCommentRequest) {
+                              @RequestBody createCommentRequest: CreateCommentRequest) =
         exerciseService.saveExerciseComment(exerciseId, createCommentRequest.toComment())
-    }
 
     @PostMapping("/exercises/{exerciseId}/answers/{answerId}/comment")
     fun submitAnswerComment(@PathVariable exerciseId: UUID,
                             @PathVariable answerId: UUID,
-                            @RequestBody createCommentRequest: CreateCommentRequest) {
+                            @RequestBody createCommentRequest: CreateCommentRequest) =
         exerciseService.saveAnswerComment(exerciseId, answerId, createCommentRequest.toComment())
-    }
 
     @PutMapping("/exercises/{exerciseId}")
-    fun publishExercise(@PathVariable exerciseId: UUID) {
+    fun publishExercise(@PathVariable exerciseId: UUID) =
         exerciseService.publishExercise(exerciseId)
-    }
 
     @PostMapping("/exercise")
-    fun createExercise(@RequestBody createExerciseRequest: CreateExerciseRequest) {
-        exerciseService.saveExercise(createExerciseRequest.toExercise())
-    }
+    fun createExercise(@RequestBody createExerciseRequest: CreateExerciseRequest) =
+        status(HttpStatus.OK).body(
+            CreateExerciseResponse(exerciseService.saveExercise(createExerciseRequest.toExercise()))
+        )
 }
 
 data class CreateExerciseRequest(
     val classId: UUID,
     val isPublished: Boolean,
     val title: String,
-    val description: String? = null
+    val description: String? = null,
+    val creatorId: UUID? = null
+)
+
+data class CreateExerciseResponse(
+    val exerciseId: UUID
 )
 
 data class CreateExerciseAnswerRequest(
     val userId: UUID,
     val answer: String
+)
+
+data class CreateExerciseAnswerResponse(
+    val answerId: UUID
 )
 
 data class CreateCommentRequest (
@@ -70,7 +82,8 @@ private fun CreateExerciseRequest.toExercise() = Exercise(
     id = UUID.randomUUID(),
     classId = this.classId,
     question = Question(this.title, this.description),
-    isPublished = this.isPublished
+    isPublished = this.isPublished,
+    creatorId = this.creatorId
 )
 
 private fun CreateExerciseAnswerRequest.toAnswer() = Answer(

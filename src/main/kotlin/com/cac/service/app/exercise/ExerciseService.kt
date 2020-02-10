@@ -22,12 +22,14 @@ class ExerciseService (
     private val exerciseRepository: ExerciseRepository,
     private val classService: ClassService
 ) {
-    fun saveExercise(exercise: Exercise) {
+    fun saveExercise(exercise: Exercise): UUID {
         if (!classService.classExists(exercise.classId)) {
             throw ClassNotFoundException("Class ${exercise.classId} does not exist.")
         }
 
         exerciseRepository.save(exercise.toExerciseView())
+
+        return exercise.id
     }
 
     fun publishExercise(exerciseId: UUID) {
@@ -38,12 +40,14 @@ class ExerciseService (
         } ?: throw ExerciseNotFoundException("Exercise $exerciseId does not exist.")
     }
 
-    fun saveExerciseAnswer(exerciseId: UUID, answer: Answer) {
+    fun saveExerciseAnswer(exerciseId: UUID, answer: Answer): UUID {
         exerciseRepository.findByIdOrNull(exerciseId)?.let {
             it.answers.add(answer.toAnswerView())
 
             exerciseRepository.save(it)
         } ?: throw ExerciseNotFoundException("Exercise $exerciseId does not exist.")
+
+        return answer.id
     }
 
     fun saveExerciseComment(exerciseId: UUID, comment: Comment) {
@@ -69,7 +73,8 @@ class ExerciseService (
         id = this.id,
         classId = this.classId,
         question = this.question.toQuestionView(),
-        isPublished = this.isPublished
+        isPublished = this.isPublished,
+        creatorId = this.creatorId
     )
 
     private fun Question.toQuestionView() = QuestionView(
