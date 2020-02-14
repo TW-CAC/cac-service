@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.status
 import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
@@ -22,8 +23,9 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/rest/auth")
 class UserSignInController(
-    @Autowired private val jwtTokenService: JwtTokenService,
-    @Autowired private val userService: UserService
+    private val jwtTokenService: JwtTokenService,
+    private val userService: UserService,
+    private val passwordEncoder: PasswordEncoder
 ) {
     companion object {
         private val LOGGER = LoggerFactory.getLogger(UserSignInController::class.java)
@@ -48,7 +50,7 @@ class UserSignInController(
     @PostMapping("/user/login")
     fun login(@RequestBody request: UserLoginRequest): ResponseEntity<UserLoginResponse> {
         return userService.findByUserName(request.userName)?.let { user ->
-            if (user.password != request.password) {
+            if (!passwordEncoder.matches(request.password, user.password)) {
                 throw AccessDeniedException("User password error.")
             }
 
@@ -68,7 +70,7 @@ class UserSignInController(
             throw UsernameFoundException()
         }
 
-        val user = userService.save(request.toUser());
+        val user = userService.save(request.toUser(passwordEncoder));
 
         return status(HttpStatus.OK).body(
             UserLoginResponse(jwtTokenService.generateToken(user.toUserDetails()), user.id, user.userName)
@@ -94,5 +96,5 @@ data class UserLoginResponse(
         val userName: String
 )
 
-private fun UserRegisterRequest.toUser() =
-    User(this.userName, this.password, this.email, this.phoneNumber)
+private fun UserRegisterRequest.toUser(passwordEncoder: PasswordEncoder) =
+    User(this.userName, passwordEncoder.encode(this.password), this.email, this.phoneNumber)
